@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #475063;
+  color: #fff;
+  height: 200vh;
+  padding: 2em;
+  text-align: center;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 5em;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 2em;
+  align-items: center;
+  gap: 1em;
+}
+
+.inputText {
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.textContainer {
+  padding: 1em;
+  width: 50%;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  text-align: left;
+}
