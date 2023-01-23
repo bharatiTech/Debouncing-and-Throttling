@@ -2,18 +2,18 @@ export default class DebounceAndThrottling {
   constructor() {}
 
   // debouncing
-  debounce(callBackFunction, delayDuration) {
+  debounce(callBackFunction, delay) {
     let timeout;
     return (...args) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         callBackFunction(...args);
-      }, delayDuration);
+      }, delay);
     };
   }
 
   // throttling
-  throttling(callBackFunction, delayDuration) {
+  throttling(callBackFunction, delay) {
     let wait = false;
     let waitingArgs = null;
 
@@ -23,7 +23,7 @@ export default class DebounceAndThrottling {
       } else {
         callBackFunction(...waitingArgs);
         waitingArgs = null;
-        setTimeout(timeoutFunc, delayDuration);
+        setTimeout(timeoutFunc, delay);
       }
     };
 
@@ -36,7 +36,31 @@ export default class DebounceAndThrottling {
       callBackFunction(...args);
       wait = true;
 
-      setTimeout(timeoutFunc, delayDuration);
+      setTimeout(timeoutFunc, delay);
+    };
+  }
+
+  // lossless throttling
+  losslessTrottling(callBackFunction, delay) {
+    let noDelay = true;
+    let queue = [];
+
+    const start = () => {
+      if (queue.length) {
+        const first = queue.shift();
+        callBackFunction(first);
+        setTimeout(start, delay);
+      } else {
+        noDelay = true;
+      }
+    };
+
+    return (...args) => {
+      queue.push([...args]);
+      if (noDelay) {
+        noDelay = false;
+        start();
+      }
     };
   }
 }
